@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: automarket
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./out
+    buildFilter:
+      paths:
+        - app/**/*.{js,jsx,ts,tsx}
+        - components/**/*.{js,jsx,ts,tsx}
+        - lib/**/*.{js,jsx,ts,tsx}
+        - public/**/*
+        - styles/**/*.{css,scss}
+        - package.json
+        - next.config.js
+        - tsconfig.json
+        - tailwind.config.ts
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
